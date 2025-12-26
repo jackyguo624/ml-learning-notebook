@@ -19,6 +19,13 @@ STOI 的核心思想是计算干净语音（Clean Speech）和处理后语音（
 
 令 $\hat{x}(k, m)$ 和 $\hat{y}(k, m)$ 分别表示第 $m$ 帧、第 $k$ 个频点的干净语音和处理后语音的 DFT 系数。
 
+> [!NOTE]
+> **DFT 系数 (Discrete Fourier Transform Coefficients)**
+>
+> DFT 系数是将时域信号（波形）转换为频域信号后的复数表示。它们包含两部分信息：
+> *   **幅值 (Magnitude)** $|\hat{x}(k, m)|$：代表该频率成分的能量强弱。在 STOI 中，后续步骤主要利用幅值的平方（能量谱）来计算。
+> *   **相位 (Phase)** $\angle \hat{x}(k, m)$：代表波形的相位信息。
+
 ### 2. 三分之一倍频程带聚合 (One-third Octave Band Aggregation)
 
 为了模拟人类听觉系统的频率分辨率，将 DFT 频点合并为 $J=15$ 个三分之一倍频程带（One-third octave bands）。
@@ -32,7 +39,29 @@ $$
 Y_j(m) = \sqrt{ \sum_{k \in \text{band}_j} |\hat{y}(k, m)|^2 }
 $$
 
+$$
+Y_j(m) = \sqrt{ \sum_{k \in \text{band}_j} |\hat{y}(k, m)|^2 }
+$$
+
 其中 $\text{band}_j$ 表示第 $j$ 个频带所包含的 DFT 频点集合。
+
+> [!TIP]
+> **为什么要用 J=15 个三分之一倍频程带？ (Understanding 1/3 Octave Bands)**
+>
+> 1.  **模拟人耳听觉 (Logarithmic Perception)**：
+>     人耳感知的“音高”变化不是线性的，而是**对数**的。例如，100Hz 到 200Hz 的听感差距，与 1000Hz 到 2000Hz 是一样的（都是一个“八度/倍频程”）。
+>     因此，为了模拟人耳特性，我们不能使用线性频率带宽（如每隔 100Hz 分一组），而要使用对数带宽。
+>
+> 2.  **三分之一倍频程 (1/3 Octave)**：
+>     “倍频程”指频率翻倍。三分之一倍频程是指将一个倍频程在对数尺度上均匀分为 3 份。
+>     这意味着每个频带的中心频率 $f_c$ 与下一个频带的关系是：$f_{next} = f_{curr} \times 2^{1/3} \approx f_{curr} \times 1.26$。
+>     这种划分方式非常接近人耳的 **临界频带 (Critical Bands)** 或 Bark 刻度，即低频分辨率高（带宽窄），高频分辨率低（带宽宽）。
+>
+> 3.  **J=15 的选择**：
+>     STOI 关注语音的可懂度，因此选取了覆盖人声主要能量范围的 15 个频带。
+>     *   **起始频率**：通常从 **150 Hz** 开始。
+>     *   **覆盖范围**：150Hz, 190Hz, 240Hz, ..., 直到约 **3.8 kHz**。
+>     *   这覆盖了语音中最重要的共振峰（Formants），足以判断内容的清晰度。
 
 ### 3. 短时时域包络 (Short-time Temporal Envelope)
 

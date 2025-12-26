@@ -10,3 +10,4 @@
 音频质量评估指标与相关实验。
 
 - **[PESQ (Perceptual Evaluation of Speech Quality)](audio/metrics/PESQ.md)**
+- **[STOI (Short-Time Objective Intelligibility)](audio/metrics/STOI.md)**
