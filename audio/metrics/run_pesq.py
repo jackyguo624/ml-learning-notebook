@@ -67,23 +67,14 @@ def main():
     
     print("\nCalculating PESQ scores...")
     
-    try:
-        score_v0 = pesq(sr, ref, ref, 'wb')
-        print(f"PESQ (Reference vs Reference v0): {score_v0:.4f}")
-    except Exception as e:
-        print(f"Error calculating PESQ for v0: {e}")
+    score_v0 = pesq(sr, ref, ref, 'wb')
+    print(f"PESQ (Reference vs Reference v0): {score_v0:.4f}")
     
-    try:
-        score_v1 = pesq(sr, ref, v1, 'wb')
-        print(f"PESQ (Reference vs Noisy v1): {score_v1:.4f}")
-    except Exception as e:
-        print(f"Error calculating PESQ for v1: {e}")
-
-    try:
-        score_v2 = pesq(sr, ref, v2, 'wb')
-        print(f"PESQ (Reference vs Shifted v2): {score_v2:.4f}")
-    except Exception as e:
-        print(f"Error calculating PESQ for v2: {e}")
+    score_v1 = pesq(sr, ref, v1, 'wb')
+    print(f"PESQ (Reference vs Noisy v1): {score_v1:.4f}")
+    
+    score_v2 = pesq(sr, ref, v2, 'wb')
+    print(f"PESQ (Reference vs Shifted v2): {score_v2:.4f}")
 
 if __name__ == "__main__":
     main()

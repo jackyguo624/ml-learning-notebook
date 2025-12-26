@@ -45,3 +45,6 @@ venv.bak/
 
 # User specific (optional, based on observed structure)
 # audio/metrics/__pycache__/ # Covered by __pycache__/
+
+# Audio metrics
+*.wav
