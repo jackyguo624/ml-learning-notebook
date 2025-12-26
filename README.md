@@ -10,11 +10,3 @@
 音频质量评估指标与相关实验。
 
 - **[PESQ (Perceptual Evaluation of Speech Quality)](audio/metrics/PESQ.md)**
-  - 详解 PESQ 算法 (ITU-T P.862) 的原理与数学模型。
-  
-  **相关文件:**
-  - 🐍 [`run_pesq.py`](audio/metrics/run_pesq.py): 用于计算 PESQ 分数的 Python 脚本。
-  - 🔊 示例音频文件:
-    - `speech_sample_v0.wav` (参考音频 Reference)
-    - `speech_sample_v1.wav`
-    - `speech_sample_v2.wav`
